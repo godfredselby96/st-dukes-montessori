@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>St. Dukes Montessori</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ====== Root Variables ====== */
+    :root {
+      --primary: #941c1c;
+      --accent: #ffd24d;
+      --muted: #6b7280;
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --radius: 12px;
+      --max: 1200px;
+    }
+
+    /* ====== Global Styles ====== */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, Segoe UI, Arial;
+      background: var(--bg);
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+    /* ====== Header / Navigation ====== */
+    header {
+      background: var(--primary);
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 6px 18px rgba(11,90,166,.08);
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-weight: 700;
+    }
+    .brand img { height: 44px; border-radius: 8px; object-fit: cover; }
+    nav { display: flex; gap: 18px; align-items: center; }
+    nav a {
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      opacity: .95;
+    }
+    nav a:hover { background: rgba(255,255,255,.08); }
+    .cta { background: var(--accent); color: #000; padding: 8px 12px; border-radius: 8px; font-weight: 700; }
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 0;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* ====== Hero Section ====== */
+    .hero {
+      position: relative;
+      height: 500px;
+      overflow: hidden;
+      border-radius: var(--radius);
+    }
+    .hero .slide {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .hero .slide.active { opacity: 1; }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 5;
+    }
+    .hero-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      text-align: center;
+      z-index: 10;
+    }
+    .hero-text h1 { font-size: 34px; margin-bottom: 12px; text-shadow: 0 6px 22px rgba(0,0,0,.3); }
+    .hero-text p { font-size: 18px; max-width: 600px; margin: 0 auto 16px; opacity: .95; }
+    .btn { display: inline-block; padding: 10px 14px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+    .btn-primary { background: var(--accent); color: #000; }
+    .btn-outline { border: 1px solid rgba(255,255,255,.18); color: #fff; background: transparent; }
+
+    /* ====== Sections ====== */
+    section { padding: 48px 0; }
+    h2 { font-size: 22px; margin-bottom: 18px; color: var(--primary); }
+    .sub { color: var(--muted); margin-bottom: 18px; }
+
+    /* ====== Grid Utilities ====== */
+    .grid { display: grid; gap: 18px; }
+    .cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .card {
+      background: var(--card);
+      padding: 18px;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 20px rgba(12,20,40,.04);
+    }
+    .small { font-size: 13px; color: var(--muted); }
+
+    /* ====== Programmes Pills ====== */
+    .pill {
+      display: inline-block;
+      padding: 8px 10px;
+      background: linear-gradient(90deg,#f7f7f9,#fff);
+      border-radius: 999px;
+      font-weight: 600;
+      border: 1px solid #eee;
+      margin-bottom: 8px;
+    }
+
+    /* ====== News Cards ====== */
+    .news-card img { width: 100%; height: 160px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; }
+    .meta { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+
+    /* News card hover effect */
+.news-card a {
+  display: block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px; /* matches card radius */
+}
+
+.news-card a:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+
+    /* ====== Gallery ====== */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto; /* ensures full image is visible */
+      object-fit: contain; /* prevents cropping */
+      border-radius: 12px;
+    }
+    .gallery img {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.08); /* slightly zoom in */
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15); /* subtle shadow */
+}
+
+    /* ====== Contact Form ====== */
+    form input, form textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #e6e9ef;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    form button {
+      background: var(--primary);
+      color: #fff;
+      border: 0;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ====== Footer ====== */
+    footer {
+      background: #743538;
+      color: #eef0f1;
+      padding: 36px 0;
+      margin-top: 24px;
+    }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .social a {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.06);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* ====== Responsive ====== */
+    @media(max-width:980px){
+      .hero { height: 400px; }
+      nav { display: none; }
+      .menu-toggle { display: inline-block; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    @media(max-width:640px){
+      .hero-text h1 { font-size: 28px; }
+      .gallery img { height: auto; }
+    }
+    .read-more {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.read-more:hover {
+  color: var(--accent);
+}
+  </style>
+</head>
+<body>
+
+  <!-- ====== HEADER ====== -->
+  <header>
+    <div class="container topbar">
+      <div class="brand">
+        <img src="schoollogo.png.jpg" alt="logo">
+        <div>
+          <div style="font-size:16px;">St. Dukes Montessori</div>
+          <div style="font-size:12px; color: rgba(255,255,255,.9);">Soaring To Excellence</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#programmes">Programmes</a>
+        <a href="#news">News</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact" class="cta">Contact Admissions</a>
+      </nav>
+      <button class="menu-toggle" id="menuBtn" aria-label="menu">☰</button>
+    </div>
+  </header>
+
+  <!-- ====== HERO SLIDESHOW ====== -->
+  <section id="home" class="hero">
+    <img class="slide active" src="student.png.jpg" alt="School Campus">
+    <img class="slide" src="ucmass.png.jpg" alt="Classroom">
+    <img class="slide" src="studenttt.jpg" alt="Students Activities">
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+      <h1>Welcome to St. Dukes Montessori</h1>
+      <p>A safe, nurturing environment where children grow academically and creatively. Enrolment open for Nursery, Primary and Junior High.</p>
+      <div>
+        <a class="btn btn-primary" href="#programmes">Our Programmes</a>
+        <a class="btn btn-outline" href="#contact">Contact Admissions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== ABOUT SECTION ====== -->
+  <section id="about">
+    <div class="container">
+      <h2>About Us</h2>
+      <p class="sub">At St. Dukes Montessori, we provide Montessori-inspired learning for early years and a strong, well-rounded curriculum for Elementary and Junior High levels. Our experienced teachers focus on academic excellence, creativity, technology skills, and whole-child development in a safe and nurturing environment. Students are encouraged to explore, learn, and grow, preparing them for future success in school and life.</p>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>Our Vision</h3>
+          <p class="small">For all children to reach their full potential as collaborative and independent learners by providing a Montessori education that nurtures their spirit as they become engaged citixens of the World</p>
+        </div>
+        <div class="card">
+           <h3> Our Mission</h3>
+           <p class="small">To produce future leaders who are <strong>Determined, Generous, Sincere and Capable</strong></p>
+        </div>
+        <div class="card">
+          <h3>Our Approach</h3>
+          <p class="small">Personalized, activity-based learning rooted in Montessori principles, fostering character, problem-solving, and life skills.</p>
+        </div>
+        <div class="card">
+          <h3>Achievements</h3>
+          <p class="small">Learners excel in academics, UCMAS competitions, sports, creative arts, and computing, developing skills for future success.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== PROGRAMMES SECTION ====== -->
+  <section id="programmes">
+    <div class="container">
+      <h2>Programmes</h2>
+      <p class="sub">From pre-school play-based learning to junior high foundational subjects.</p>
+      <div class="grid cols-3">
+        <div class="card">
+          <div class="pill">Nursery & Kindergarten</div>
+          <h4>Early Years</h4>
+          <p class="small">Play-based learning, language development, early numeracy and social skills.</p>
+        </div>
+        <div class="card">
+          <div class="pill">Elementary Level (Grade 1 to 6)</div>
+          <h4>Core Subjects</h4>
+          <p class="small">English, Math, Science, Ghanaian Languages, French, Creative Arts and Computing.</p>
+        </div>
+        <div class="card">
+          <div class="pill">Junior High (Grade 7 to 9)</div>
+          <h4>Preparation & Exams</h4>
+          <p class="small">Learners receive focused lessons, practice exams, and mentorship to prepare effectively for their final year Junior High exams.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== NEWS SECTION ====== -->
+  <section id="news">
+  <div class="container">
+    <h2>News & Updates</h2>
+    <p class="sub">Latest school news, events and achievements.</p>
+    <div class="grid cols-3">
+
+      <!-- UCMAS article -->
+      <article class="card news-card">
+        <img src="ucmasss.png.jpg" alt="UCMAS Champions">
+        <div class="meta">Sep 24, 2024 • UCMAS</div>
+        <h4>Students excel at UCMAS national rounds</h4>
+        <p class="small">Our students performed outstandingly at the 2024 UCMAS competition.</p>
+        <p class="full-article" style="display:none;">
+          Learners from St. Dukes Montessori participated in the national rounds and achieved outstanding results, bringing home several awards. Their hard work and dedication were celebrated by teachers and parents alike.
+        </p>
+        <a href="#" class="read-more">Read more →</a>
+      </article>
+
+      <!-- Graduation article -->
+      <article class="card news-card">
+        <img src="graduation.png.jpg" alt="Graduation">
+        <div class="meta">Jul 10, 2025 • Graduation Day</div>
+        <h4>Annual Graduation Day</h4>
+        <p class="small">Highlights from a day of fun, sportsmanship and community engagement.</p>
+        <p class="full-article" style="display:none;">
+          Graduation day celebrated the achievements of our students across all levels. Families and staff joined in, enjoying performances, awards, and memorable speeches marking the end of another successful school year.
+        </p>
+        <a href="#" class="read-more">Read more →</a>
+      </article>
+
+      <!-- Excursion article -->
+      <article class="card news-card">
+        <img src="excor.jpg" alt="Excursion">
+        <div class="meta">Nov 21, 2024 • Excursion</div>
+        <h4>School Excursion</h4>
+        <p class="small">Students had an exciting trip exploring new learning environments.</p>
+        <p class="full-article" style="display:none;">
+          The school excursion provided students with hands-on experiences outside the classroom, fostering curiosity and teamwork. Highlights included interactive exhibits, guided tours, and fun outdoor activities.
+        </p>
+        <a href="#" class="read-more">Read more →</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+  <!-- ====== GALLERY SECTION ====== -->
+  <section id="gallery">
+    <div class="container">
+      <h2>Gallery</h2>
+      <div class="gallery card" style="padding:12px;">
+        <img src="mav.jpg" alt="Head Girl speech">
+        <img src="ucmass.png.jpg" alt="UCMAS">
+        <img src="student.png.jpg" alt="Student">
+        <img src="speech2.jpg" alt="speech">
+        <img src="graduation.png.jpg" alt="Student">
+        <img src="police.jpg" alt="Career day">
+        <img src="studentt.jpg" alt="Student">
+        <img src="EVANSS.jpg" alt="bus">
+        <img src="play.jpg" alt="play">
+        <img src="evans.jpg" alt="head boys">
+        <img src="bus.png.jpg" alt="bus">
+        <img src="doenn.jpg" alt="student">
+        <img src="studenttt.jpg" alt="student">
+        <img src="excor.jpg" alt="excursion">
+        <img src="plays.jpg" alt="play">
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CONTACT / ADMISSIONS ====== -->
+  <section id="contact">
+    <div class="container">
+      <h2>Contact / Admissions</h2>
+      <p class="sub">Have questions? Send us a message.</p>
+      <div class="grid cols-2">
+        <div class="card">
+          <h4>Contact Details</h4>
+          <p class="small"><strong>Address:</strong> St. Dukes Montessori — Amasaman - Accra, Ghana</p>
+          <p class="small"><strong>Phone:</strong> 030 296 5338</p>
+          <p class="small"><strong>Email:</strong> dukesmontessori@gmail.com</p>
+        </div>
+        <form class="card" action="https://formspree.io/f/yourformid" method="POST">
+          <input name="name" placeholder="Full name" required>
+          <input name="_replyto" type="email" placeholder="Email" required>
+          <input name="phone" placeholder="Phone (optional)">
+          <textarea name="message" rows="5" placeholder="How can we help?" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h3>St. Dukes Montessori</h3>
+        <div class="small">Soaring To Excellence</div>
+        <div class="small" style="margin-top:12px;">© <span id="year"></span> St. Dukes Montessori. All rights reserved.</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="small">Contact: dukesmontessori@gmail.com • 030 296 5338</div>
+        <div class="social" style="margin-top:12px;">
+          <a href="https://web.facebook.com/stdukesmontessorischool" target="_blank">Facebook</a>
+          <a href="#" target="_blank">Instagram</a>
+          <a href="#" target="_blank">Twitter</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====== SCRIPTS ====== -->
+  <script>
+    // Update year dynamically
+    document.getElementById('year').innerText = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    menuBtn.addEventListener('click', () => {
+      const nav = document.querySelector('nav');
+      if(nav.style.display === 'flex') nav.style.display = '';
+      else nav.style.display = 'flex';
+      nav.style.flexDirection = 'column';
+      nav.style.position = 'absolute';
+      nav.style.right = '20px';
+      nav.style.top = '64px';
+      nav.style.background = 'rgba(11,90,166,.95)';
+      nav.style.padding = '12px';
+      nav.style.borderRadius = '10px';
+    });
+
+    // Hero slideshow
+    const heroSlides = document.querySelectorAll('.hero .slide');
+    let currentHeroSlide = 0;
+    setInterval(() => {
+      heroSlides[currentHeroSlide].classList.remove('active');
+      currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+      heroSlides[currentHeroSlide].classList.add('active');
+    }, 4000); // Change every 4 seconds
+  </script>
+  <!-- Your other scripts, if any -->
+  
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const readMoreLinks = document.querySelectorAll(".read-more");
+
+    readMoreLinks.forEach(link => {
+      link.addEventListener("click", function(e) {
+        e.preventDefault();
+        const article = this.previousElementSibling; // gets the hidden <p>
+        if(article.style.display === "none") {
+          article.style.display = "block";
+          this.textContent = "Read less ←";
+        } else {
+          article.style.display = "none";
+          this.textContent = "Read more →";
+        }
+      });
+    });
+  });
+  </script>
+
+</body>
+</html>
